@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_security_group" "instance" {
-  name = "terraform-example-instance"
+  name = "terraform-demo-instance"
   ingress {
     from_port   = var.server_port
     to_port     = var.server_port
@@ -12,7 +12,7 @@ resource "aws_security_group" "instance" {
   }
 }
 
-resource "aws_instance" "example" {
+resource "aws_instance" "demo" {
   ami           = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
   vpc_security_group_ids = [aws_security_group.instance.id]
