@@ -1,0 +1,25 @@
+- name: Deploy Terraform module
+  hosts: dev
+  gather_facts: False
+  become: true
+  vars:
+    server_port : 8088
+    bucket : 'demo-terraform-flux'
+    region: "us-east-2"
+    key : "demo.tfstate"
+
+  tasks:
+    - name : Clone the terraform repo
+      terraform:
+        project_path: '/home/ec2-user/terraform_task/'
+        force_init: true
+        backend_config:
+          region: "{{ region }}"
+          key : "{{ key }}"
+          bucket : "{{ bucket }}"
+        variables :
+          server_port : "{{ server_port }}"
+      register : command
+    - name: print all returned values
+      debug:
+        msg: "{{ command }}"
